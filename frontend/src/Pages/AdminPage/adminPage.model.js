@@ -8,7 +8,7 @@ import axios from 'axios';
 import { message, } from 'antd';
 import _cloneDeep from 'lodash/cloneDeep';
 
-const API_URL = 'https://easy-purchase-app-1038835ee929.herokuapp.com/api';
+const API_URL = 'https://easy-purchase-app-08ef144b5d7a.herokuapp.com/api';
 const { model, array, optional, string, boolean, number, maybeNull } = types;
 
 const AdminPageModel = model('AdminPageModel', {

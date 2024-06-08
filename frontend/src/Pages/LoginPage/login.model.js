@@ -4,7 +4,7 @@ import { types, flow, getEnv } from 'mobx-state-tree';
 import { rootStore } from '../../Stores/index';
 import { message } from 'antd';
 const { model, string, optional } = types;
-const API_URL = 'https://easy-purchase-app-1038835ee929.herokuapp.com/api';
+const API_URL = 'https://easy-purchase-app-08ef144b5d7a.herokuapp.com/api';
 
 
 const LoginModel = model('LoginModel', {
