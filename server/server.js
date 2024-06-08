@@ -25,11 +25,6 @@ app.get('/hello', (req, res) => {
 // app.use('/api/login', require('./routes/login/login.routes'))
 // app.use('/api/program', require('./routes/program/program.routes'))
 
-// Serve React app for all other routes
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
-
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
