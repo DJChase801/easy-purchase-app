@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(cors(corsOptions));
 app.use(bodyParser.json()); // for parsing application/json
 
+
 // Setup a simple route for testing
 app.get('/hello', (req, res) => {
     res.send('Hello World!');
@@ -25,9 +26,10 @@ app.get('/hello', (req, res) => {
 // app.use('/api/login', require('./routes/login/login.routes'))
 // app.use('/api/program', require('./routes/program/program.routes'))
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-
-

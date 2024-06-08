@@ -1,20 +1,28 @@
 #!/bin/bash
 
-# Set Docker default platform
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
+# Exit script on any error
+set -e
 
-# Build Docker images
-docker-compose build
+# Check if Heroku remote is already added
+if ! git remote | grep -q heroku; then
+    echo "Adding Heroku remote..."
+    heroku git:remote -a easy-purchase-app
+fi
 
-# Tag Docker images
-docker tag easy-purchase-app-frontend:latest registry.heroku.com/easy-purchase-app/web
-docker tag easy-purchase-app-backend:latest registry.heroku.com/easy-purchase-app/web
+# Add all changes to git
+echo "Staging changes..."
+git add .
 
-# Push Docker images to Heroku registry
-docker push registry.heroku.com/easy-purchase-app/web
+# Commit the changes with a message
+echo "Committing changes..."
+git commit -m "Deploying to Heroku"
 
-# Release the container to Heroku
-heroku container:release web --app easy-purchase-app
+# Push to Heroku
+echo "Pushing to Heroku..."
+git push heroku master:main
 
-# Unset Docker default platform
-unset DOCKER_DEFAULT_PLATFORM
+# Open the app in the default web browser
+echo "Opening the app..."
+heroku open
+
+echo "Deployment complete!"
