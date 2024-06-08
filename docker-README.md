@@ -11,7 +11,7 @@
 
 ```sh
 # 1. Heroku login
-heroku login 
+heroku login  
 - takes you to web browser login
 
 # 2. Heroku create app
