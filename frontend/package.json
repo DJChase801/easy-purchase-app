@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://easy-purchase-app-08ef144b5d7a.herokuapp.com/api",
+  "proxy": "https://easy-purchase-app-ea08da4264c2.herokuapp.com/api",
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
     "antd": "^5.17.0",
