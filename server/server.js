@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
     origin: '*', // Allow all origins
     credentials: true,
-  };
-  
+};
+
 
 // Middleware to serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/build')));
@@ -22,8 +22,8 @@ app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
 
-app.use('/api/login', require('./routes/login/login.routes'))
-app.use('/api/program', require('./routes/program/program.routes'))
+// app.use('/api/login', require('./routes/login/login.routes'))
+// app.use('/api/program', require('./routes/program/program.routes'))
 
 // Serve React app for all other routes
 app.get('*', (req, res) => {
