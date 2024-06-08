@@ -43,7 +43,7 @@ $ git push origin main # Save your code to your git repo
 
 $ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
-$ docker-comose build 
+$ docker-compose build 
 $ docker tag easy-purchase-app-frontend:latest registry.heroku.com/easy-purchase-app/web
 $ docker tag easy-purchase-app-backend:latest registry.heroku.com/easy-purchase-app/web
 
