@@ -1,0 +1,16 @@
+.top-bar {
+    display: flex;
+    color: white;
+    background-color: var(--dark-color);
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+
+.page-nav {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    cursor: pointer;
+}

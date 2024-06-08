@@ -1,0 +1,43 @@
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: space-around;
+    gap: 100px;
+    width: 100%;
+    padding-top: 75px;
+}
+
+.sub-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.checkout {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 5px;
+    padding-right: 20px;
+    align-self: flex-end;
+    font-size: x-large;
+}
+
+.checkout-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.cancel {
+    background-color: var(--bad-color);
+}
+
+.input-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 10px;
+    padding-right: 10px;
+}

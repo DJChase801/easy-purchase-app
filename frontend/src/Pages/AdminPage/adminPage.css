@@ -1,0 +1,84 @@
+.admin-page {
+    padding: 40px;
+}
+
+.label-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pane {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 40px;
+    padding: 40px;
+}
+
+.left-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.query-config {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-bottom: 23px;
+}
+
+.check-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pane-label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.pane-input {
+    border: var(--dark-color) 2px solid;
+    border-radius: 10px;
+    width: 390px;
+    height: 32px;
+    padding-left: 10px;
+    margin-bottom: 15px; 
+    font-size: 18px;
+}
+
+.action-button {
+    border: var(--dark-color) 2px solid;
+    background-color: var(--action-color);
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 10px; 
+    cursor: pointer;
+    min-width: 300px; 
+    margin: 10px;
+}
+
+.pane-table {
+    width: 99%;
+    border: 2px solid var(--dark-color);
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.right-pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 90px;
+}
+
+.products-pane {
+    padding-top: 110px;
+}
+
+.check-boxes {
+    padding-top: 35px;
+}

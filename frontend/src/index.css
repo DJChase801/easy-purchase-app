@@ -1,0 +1,233 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+:root {
+  --main-color: #00fdcf;
+  --bad-color: #ff0000ae;
+  --dark-color: #000000db;
+  --action-color: #00a7c4;
+  --shade-color:  rgb(238, 238, 238);
+}
+
+.login-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20vh;
+}
+
+.nav-company-logo {
+  width: 180px;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+  border-radius: 10px;
+  margin-left: 80px;
+  margin-top: 40px;
+  width: 456px;
+  box-shadow: 0px 0px 45px 0px rgba(100, 190, 172, 0.539);
+}
+
+.login-input {
+  font-size: 18px;
+  padding: 2px;
+  padding-left: 10px;
+  border-radius: 3px; 
+  height: 30px; 
+  background-color: gainsboro;
+  min-width: 350px;
+  border: none;
+}
+
+.title {
+  background-color: var(--dark-color);
+  color: white;
+  font-size: 32px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  border-radius: 10px 10px 0 0;
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fancy {
+  position: relative;
+  white-space: nowrap;
+
+  &:after {
+      --deco-height: 0.3125em;
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(var(--deco-height) * -0.625);
+      height: var(--deco-height);
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M-17 30.5C-1 22 72-4 54 13 37.9 28.2-2.5 57.5 16 55.5s72-29 104-40' stroke='%2300FDCF' stroke-width='10'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h100v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+      background-size: auto 100%;
+      background-repeat: round;
+      background-position: 0em;
+  }
+}
+
+.stage-button {
+  border: var(--dark-color) 2px solid;
+  background-color: var(--main-color);
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 10px; 
+  cursor: pointer;
+  min-width: 100px; 
+}
+
+.link {
+  font-size: 14px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: var(--dark-color);
+  text-decoration: underline;
+}
+
+.stage-body {
+  display: flex;
+  color: black;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 0 0 20px 20px;
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+.products-view {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  border: var(--dark-color) 2px solid;
+  border-radius: 10px;
+  height: 400px;
+  width: 400px;
+  padding: 5px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+  background-color: var(--shade-color);
+}
+
+.all {
+  height: 500px;
+}
+
+.scroll-content {
+  height: 100%;
+  overflow-y: auto; /* Enables vertical scrolling */
+  overflow-x: hidden; /* Disables horizontal scrolling */
+  padding-right: 17px; /* Adjust this value to push the scrollbar out of view */
+  box-sizing: content-box; /* Helps with padding calculations */
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: -17px; /* Effectively hides the scrollbar by moving it out of the visible area */
+}
+
+.body-content {
+  padding: 25px;
+  padding-top: 50px; 
+}
+
+.input {
+  border: var(--dark-color) 2px solid;
+  border-radius: 10px;
+  width: 415px;
+  margin-left: 7px;
+  margin-top: 10px;
+  margin-bottom: 25px; 
+}
+
+.input-label {
+  margin-left: 10px;
+  margin-top: 15px; 
+}
+
+.product-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid var(--dark-color);
+  border-radius: 10px;
+  width: 365px;
+  height: 60px;
+  background-color: white;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.539);
+  cursor: pointer;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 200px;
+}
+.tile-image-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  width: 70px; 
+}
+
+.tile-image {
+  height: 70px;
+  max-width: 70px;
+  object-fit: contain;
+
+}
+
+.big-strong {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.search-input {
+  border: var(--dark-color) 2px solid;
+  border-radius: 10px;
+  width: 390px;
+  height: 32px;
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 25px; 
+  font-size: 18px;
+}
+
+.modal-label {
+  font-size: 18px;
+  margin-top: 15px; 
+}
