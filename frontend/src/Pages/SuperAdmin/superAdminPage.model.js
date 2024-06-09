@@ -3,7 +3,7 @@ import axios from 'axios';
 import { types, flow, getEnv } from 'mobx-state-tree';
 import { rootStore } from '../../Stores/index';
 import { message } from 'antd';
-const API_URL = 'https://easy-purchase-app-ea08da4264c2.herokuapp.com/api';
+const API_URL = 'https://easy-purchase-app-2a160c3ef8e8.herokuapp.com/api';
 
 const { model, string, optional, array, number } = types;
 

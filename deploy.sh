@@ -19,7 +19,7 @@ git commit -m "Deploying to Heroku"
 
 # Push to Heroku
 echo "Pushing to Heroku..."
-git push heroku master:main
+git push heroku
 
 # Open the app in the default web browser
 echo "Opening the app..."

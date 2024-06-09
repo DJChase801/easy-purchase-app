@@ -2,7 +2,7 @@
   "name": "easy-purchase-app",
   "version": "1.0.0",
   "description": "Welcome to the Easy Purchase App. This guide will help you set up and run the application locally on your machine.",
-  "proxy": "https://easy-purchase-app-1724d7b21f08.herokuapp.com/",
+  "proxy": "https://easy-purchase-app-2a160c3ef8e8.herokuapp.com/",
   "main": "index.js",
   "scripts": {
     "test": "cd frontend && yarn test",

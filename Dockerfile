@@ -17,8 +17,8 @@ COPY server/ ./
 FROM node:22
 WORKDIR /app
 
-# Install serve globally
-RUN yarn global add serve
+# Install serve globally and concurrently
+RUN yarn global add serve concurrently
 
 # Copy frontend build from Stage 1
 COPY --from=build-frontend /app/frontend/build ./frontend/build
@@ -34,5 +34,5 @@ RUN yarn install --production
 EXPOSE 3000
 EXPOSE 5000
 
-# Start both applications
-CMD ["sh", "-c", "node server.js & serve -s /app/frontend/build -l 3000"]
+# Start the application
+CMD ["yarn", "start"]

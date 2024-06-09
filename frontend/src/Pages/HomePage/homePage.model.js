@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { message } from 'antd';
 import { rootStore } from '../../Stores/index';
 const { model, optional, array, boolean, number, maybeNull } = types;
-const API_URL = 'https://easy-purchase-app-ea08da4264c2.herokuapp.com/api';
+const API_URL = 'https://easy-purchase-app-2a160c3ef8e8.herokuapp.com/api';
 
 
 const HomePageModel = model('HomePageModel', {
