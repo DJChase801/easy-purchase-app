@@ -35,4 +35,4 @@ EXPOSE 3000
 EXPOSE 5000
 
 # Start the application
-CMD ["yarn", "start"]
+CMD ["concurrently", "\"serve -s /app/frontend/build -l 3000\"", "\"yarn --cwd /app/server start\""]

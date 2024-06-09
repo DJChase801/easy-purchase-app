@@ -51,3 +51,12 @@ $ docker push registry.heroku.com/easy-purchase-app/web
 $ heroku container:release web --app easy-purchase-app
 
 $ unset DOCKER_DEFAULT_PLATFORM
+
+**************************************************
+
+heroku login
+heroku create easy-purchase-app **if not created
+heroku container:login
+docker build --platform linux/amd64 -t registry.heroku.com/easy-purchase-app/web .
+docker push registry.heroku.com/easy-purchase-app/web
+heroku container:release web --app easy-purchase-app
