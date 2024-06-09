@@ -5,6 +5,7 @@ import { rootStore } from '../../Stores/index';
 import { message } from 'antd';
 const { model, string, optional } = types;
 const API_URL = 'https://easy-purchase-app-3cc626bc131a.herokuapp.com/api';
+// const API_URL = 'http://localhost:5000/api';
 
 
 const LoginModel = model('LoginModel', {

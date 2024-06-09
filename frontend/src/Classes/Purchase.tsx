@@ -4,11 +4,11 @@ import BasePurchaseModel from './BasePurchase'; // Adjust the import path as nec
 const { optional, string, number } = types;
 
 const PurchaseModel = BasePurchaseModel.named('PurchaseModel').props({
-    purchase_id: optional(number, 0),
+    purchase_id: optional(string, ''),
     product: optional(string, ''),
     purchase_date: optional(string, ''),
-    member_id: optional(number, 0),
-    product_id: optional(number, 0)
+    member_id: optional(string, ''),
+    product_id: optional(string, '')
 })
 .views((self) => ({
     get key() {

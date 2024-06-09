@@ -50,7 +50,7 @@ module.exports = (sequelize) => {
         },
     }, {
         timestamps: false, // Disable Sequelize's default timestamps behavior
-        tableName: 'members', // Optional: Define the table name explicitly
+        tableName: 'Members', // Optional: Define the table name explicitly
     });
 
     return Member;

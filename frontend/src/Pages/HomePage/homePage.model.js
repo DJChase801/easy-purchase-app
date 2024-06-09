@@ -6,15 +6,16 @@ import axios from 'axios';
 import { cloneDeep } from 'lodash';
 import { message } from 'antd';
 import { rootStore } from '../../Stores/index';
-const { model, optional, array, boolean, number, maybeNull } = types;
+const { model, optional, array, boolean, string, maybeNull } = types;
 const API_URL = 'https://easy-purchase-app-3cc626bc131a.herokuapp.com/api';
+// const API_URL = 'http://localhost:5000/api';
 
 
 const HomePageModel = model('HomePageModel', {
   products: array(Product, []),
   cartProducts: array(Product, []),
   showAddMemberModal: optional(boolean, false),
-  selectedMemberId: maybeNull(number),
+  selectedMemberId: maybeNull(string),
   members: array(Member, []),
 })
   .views(self => ({

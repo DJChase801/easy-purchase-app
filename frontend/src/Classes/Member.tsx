@@ -3,7 +3,7 @@ import { types } from 'mobx-state-tree';
 const { model, string, number, maybeNull } = types;
 
 export interface IMember {
-    member_id?: number;
+    member_id?: string;
     first_name: string;
     last_name: string;
     fullName: string;
@@ -13,7 +13,7 @@ export interface IMember {
 }
 
 const MemberModel = model('MemberModel', {
-    member_id: maybeNull(number),
+    member_id: maybeNull(string),
 	first_name: string,
 	last_name: string,
     email: string,

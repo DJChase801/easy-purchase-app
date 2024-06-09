@@ -4,9 +4,9 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     const Purchase = sequelize.define('Purchase', {
         purchase_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
-            autoIncrement: true,
         },
         program_id: {
             type: DataTypes.UUID,
@@ -42,8 +42,14 @@ module.exports = (sequelize) => {
         },
     }, {
         timestamps: false,
-        tableName: 'purchases',
+        tableName: 'Purchases',
     });
+
+    Purchase.associate = function (models) {
+        Purchase.belongsTo(models.Member, { foreignKey: 'member_id' });
+        Purchase.belongsTo(models.Product, { foreignKey: 'product_id' });
+    };
+
 
     return Purchase;
 };

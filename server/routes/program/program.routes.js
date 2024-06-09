@@ -1,6 +1,6 @@
-// const express = require('express');
-// const router = express.Router({ mergeParams: true });
+const express = require('express');
+const router = express.Router({ mergeParams: true });
 
-// router.use('/:program_id', require('./:program_id/:program_id.routes'))
+router.use('/:program_id', require('./:program_id/:program_id.routes'))
 
-// module.exports = router;
+module.exports = router;

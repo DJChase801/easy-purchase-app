@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 
 const EditPurchaseModal = ({ model }: any) => {
-    const [newPurchase, setNewPurchase] = useState(Purchase.create({ member_id: 0, product_id: 0, purchase_date: '', processed: false }));
+    const [newPurchase, setNewPurchase] = useState(Purchase.create({ member_id: '', product_id: '', purchase_date: '', processed: false }));
     const filterOption = (input: string, option?: { label: string; value: string }) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const dateFromString = (dateString: string) => {
@@ -30,7 +30,7 @@ const EditPurchaseModal = ({ model }: any) => {
             open={model.showEditPurchaseModal}
             destroyOnClose={true}
             closable={false}
-            afterClose={() => setNewPurchase(Purchase.create({ member_id: 0, product_id: 0, purchase_date: '', processed: false }))}
+            afterClose={() => setNewPurchase(Purchase.create({ member_id: '', product_id: '', purchase_date: '', processed: false }))}
             footer={[]}
         >
             <div className="modal-label">Select Member</div>

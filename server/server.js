@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
+const { sequelize } = require('./models');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
 
@@ -23,13 +24,13 @@ app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
 
-// app.use('/api/login', require('./routes/login/login.routes'))
-// app.use('/api/program', require('./routes/program/program.routes'))
+app.use('/api/login', require('./routes/login/login.routes'))
+app.use('/api/program', require('./routes/program/program.routes'))
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

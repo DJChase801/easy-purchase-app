@@ -4,7 +4,7 @@ import { Modal, Select, DatePicker, Checkbox } from "antd";
 import Purchase from "../../Classes/Purchase";
 
 const AddPurchaseModal = ({ model }: any) => {
-    const [newPurchase, setNewPurchase] = useState(Purchase.create({ member_id: 0, product_id: 0, purchase_date: undefined, processed: false }));
+    const [newPurchase, setNewPurchase] = useState(Purchase.create({ member_id: '', product_id: '', purchase_date: undefined, processed: false }));
     const filterOption = (input: string, option: any) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -19,7 +19,7 @@ const AddPurchaseModal = ({ model }: any) => {
             open={model.showAddPurchaseModal}
             closable={false}
             destroyOnClose={true}
-            afterClose={() => setNewPurchase(Purchase.create({ member_id: 0, product_id: 0, purchase_date: undefined, processed: false }))}
+            afterClose={() => setNewPurchase(Purchase.create({ member_id: '', product_id: '', purchase_date: undefined, processed: false }))}
             footer={null}
             data-testid="add-purchase-modal"
         >

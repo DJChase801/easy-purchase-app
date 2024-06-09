@@ -9,10 +9,11 @@ import { message, } from 'antd';
 import _cloneDeep from 'lodash/cloneDeep';
 
 const API_URL = 'https://easy-purchase-app-3cc626bc131a.herokuapp.com/api';
+// const API_URL = 'http://localhost:5000/api';
 const { model, array, optional, string, boolean, number, maybeNull } = types;
 
 const AdminPageModel = model('AdminPageModel', {
-    deletingId: maybeNull(number),
+    deletingId: maybeNull(string),
     showConfirmDeleteModal: optional(boolean, false),
     members: array(Member, []),
     memberSearchValue: optional(string, ''),
@@ -336,10 +337,12 @@ const AdminPageModel = model('AdminPageModel', {
                 self.purchases = [];
                 self.purchase = [];
                 const { data } = yield axios
-                    .get(`${API_URL}/program/${self.programId}/purchases?program_id=${self.programId}&start_date=${self.queryStartDate}&end_date=${self.queryEndDate}&group_by_members=${self.groupByMembers}`);
+                .get(`${API_URL}/program/${self.programId}/purchases?program_id=${self.programId}&start_date=${self.queryStartDate}&end_date=${self.queryEndDate}&group_by_members=${self.groupByMembers}`);
+                console.log('data: ', data);
                 if (!data.purchases) {
                     message.warning('No purchases found');
                 } else {
+                    console.log('data.purchases: ', data.purchases);
                     self.purchases = data.purchases.map(purchase => Purchases.create({
                         purchase_ids: purchase.purchase_ids,
                         member: purchase.member,
@@ -353,12 +356,13 @@ const AdminPageModel = model('AdminPageModel', {
                         member_id: purchase.member_id,
                         member: purchase.member,
                         product: purchase.product,
-                        purchase_date: new Date(purchase.purchase_date + ' UTC').toLocaleString(), // /adjust for utc
+                        purchase_date: new Date(purchase.purchase_date).toLocaleString(),
                         amount: purchase.amount,
-                        processed: purchase.processed === 0 ? false : true,
+                        processed: purchase.processed,
                     }));
                 }
             } catch (e) {
+                console.log('e: ', e);
                 message.error('Error fetching purchases');
             }
         }),
@@ -420,6 +424,7 @@ const AdminPageModel = model('AdminPageModel', {
             try {
                 yield axios.put(`${API_URL}/program/${self.programId}/purchases?program_id=${self.programId}`, { purchaseIds, value });
             } catch (e) {
+                console.log('e: ', e);
                 message.error('Error processing purchase');
             }
         }),

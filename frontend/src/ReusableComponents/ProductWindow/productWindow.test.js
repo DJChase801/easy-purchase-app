@@ -5,8 +5,8 @@ import { cleanup } from '@testing-library/react';
 
 describe('ProductWindow', () => {
     const mockProducts = [
-        { product_id: 2323, name: 'Apple', price: 1.99, image: ''},
-        { product_id: 2323, name: 'Banana', price: 2.99, image: ''},
+        { product_id: '2323', name: 'Apple', price: 1.99, image: ''},
+        { product_id: '2323', name: 'Banana', price: 2.99, image: ''},
     ];
 
     it('should render search input and filter products based on search', () => {
