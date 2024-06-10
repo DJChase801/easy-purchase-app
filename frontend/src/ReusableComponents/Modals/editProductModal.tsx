@@ -68,6 +68,7 @@ const EditProductModal = ({ model }: any) => {
                 <img src={newProduct.image || 'https://static-00.iconduck.com/assets.00/no-image-icon-2048x2048-2t5cx953.png'} alt="Product" style={{ height: '100px' }} />
             </div>
             <br />
+            <div><span style={{ color: 'red'}}>*</span>Indicates Required Fields</div>
             <br />
         </Modal>
     );

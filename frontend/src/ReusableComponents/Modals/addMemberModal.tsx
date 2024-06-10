@@ -44,11 +44,13 @@ const AddMemberModal = ({ model }: any) => {
             <div className="modal-label">Phone</div>
             <Input
                 size="large"
-                style={{ marginBottom: '50px' }}
+                style={{ marginBottom: '20px' }}
                 placeholder="Phone Number..."
                 value={newMember.phone}
                 onChange={(e) => { setNewMember({ ...newMember, phone: e.target.value }) }}
             />
+            <div><span style={{ color: 'red'}}>*</span>Indicates Required Fields</div>
+            <br />
             <div className='checkout-buttons'>
                 <button className='stage-button cancel' onClick={() => model.setShowAddMemberModal(false)} data-testid="cancel-button">
                     Cancel

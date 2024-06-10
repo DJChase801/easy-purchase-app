@@ -37,21 +37,21 @@ const EditMemberModal = ({ model }: any) => {
                 </div>
             ]}
         >
-            <div className="modal-label">First Name <span style={{ color: 'red'}}>*</span></div>
+            <div className="modal-label">First Name <span style={{ color: 'red' }}>*</span></div>
             <Input
                 size="large"
                 placeholder="First Name"
                 value={existingMember.first_name}
                 onChange={(e) => { setExistingMember({ ...existingMember, first_name: e.target.value }) }}
             />
-            <div className="modal-label">Last Name <span style={{ color: 'red'}}>*</span></div>
+            <div className="modal-label">Last Name <span style={{ color: 'red' }}>*</span></div>
             <Input
                 size="large"
                 placeholder="Last Name"
                 value={existingMember.last_name}
                 onChange={(e) => { setExistingMember({ ...existingMember, last_name: e.target.value }) }}
             />
-            <div className="modal-label">Email <span style={{ color: 'red'}}>*</span></div>
+            <div className="modal-label">Email <span style={{ color: 'red' }}>*</span></div>
             <Input
                 size="large"
                 placeholder="Email"
@@ -61,12 +61,14 @@ const EditMemberModal = ({ model }: any) => {
             <div className="modal-label">Phone</div>
             <Input
                 size="large"
-                style={{ marginBottom: '50px' }}
+                style={{ marginBottom: '20px' }}
                 placeholder="Phone Number..."
                 value={existingMember.phone}
                 onChange={(e) => { setExistingMember({ ...existingMember, phone: e.target.value }) }}
             />
-            
+            <div><span style={{ color: 'red' }}>*</span>Indicates Required Fields</div>
+            <br />
+
         </Modal>
     );
 };

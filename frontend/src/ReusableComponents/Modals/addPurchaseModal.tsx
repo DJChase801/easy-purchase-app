@@ -70,10 +70,12 @@ const AddPurchaseModal = ({ model }: any) => {
             <Checkbox
                 onChange={(e) => { setNewPurchase({ ...newPurchase, processed: e.target.checked }) }}
                 checked={newPurchase.processed}
-                style={{ marginBottom: '50px', paddingLeft: '20px' }}
+                style={{ marginBottom: '20px', paddingLeft: '20px' }}
             >
                 Yes Processed Already
             </Checkbox>
+            <div><span style={{ color: 'red'}}>*</span>Indicates Required Fields</div>
+            <br />
             <div key="buttons" className='checkout-buttons'>
                 <button className='stage-button cancel' key="back" onClick={() => model.setShowAddPurchaseModal(false)} data-testid="cancel-button">
                     Cancel

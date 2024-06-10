@@ -50,8 +50,8 @@ const AddProductModal = ({ model }: any) => {
                 <img src={newProduct.image || 'https://static-00.iconduck.com/assets.00/no-image-icon-2048x2048-2t5cx953.png'} alt="Product" style={{ height: '100px' }} />
             </div>
             <br />
+            <div><span style={{ color: 'red'}}>*</span> Indicates Required Fields</div>
             <br />
-
             <div key="buttons" className='checkout-buttons'>
                 <button className='stage-button cancel' key="back" onClick={() => model.setShowAddProductModal(false)} data-testid="cancel-button">
                     Cancel
