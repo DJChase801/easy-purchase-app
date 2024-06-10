@@ -31,7 +31,7 @@ const TopBar = ({ model }: any) => {
 
     return (
         <div className="top-bar">
-            <div>
+            <div className='big-title' onClick={() => model.navigateToPage('home', navigate)}>
                 <span data-testid='app-title' className="fancy">Easy</span> Purchase App
             </div>
             <Dropdown className="page-nav" menu={{ items }} trigger={['click']}>
