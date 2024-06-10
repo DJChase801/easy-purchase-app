@@ -158,14 +158,14 @@ const PurchasesPane = ({ model }: any) => {
       </div>
       <div className='right-pane'>
         <button onClick={() => model.setShowAddPurchaseModal(true)} className='action-button'>+ Add Purchase</button>
-        <button onClick={() => model.processPurchases(true)} className='action-button'>Mark Processed</button>
+        <button onClick={() => model.processPurchases(true)} className='action-button'>Mark All Processed</button>
         <button
           disabled={model.groupByMembers}
           onClick={() => model.processPurchases(false)}
           className='action-button'
           style={model.groupByMembers ? {'backgroundColor': 'gray', cursor: 'not-allowed'} : {}}
         >
-          Mark Un-Processed
+          Mark All Un-Processed
         </button>
         {/* <button onClick={() => console.log('need to implement')} className='action-button'>Generate Report</button> */}
       </div>

@@ -74,7 +74,10 @@ router.delete('/members/:member_id', async (req, res) => {
     try {
         const { member_id } = req.params;
 
-        await Member.destroy({
+        // soft delete member
+        await Member.update({
+            deleted_at: new Date()
+        }, {
             where: {
                 member_id: member_id
             }
@@ -272,11 +275,12 @@ router.post('/purchases/config', async (req, res) => {
 router.put('/purchases/:purchase_id', async (req, res) => {
     try {
         const { purchase_id } = req.params;
-        const { member_id, product_id, processed } = req.body.editPurchase;
+        const { member_id, product_id, processed, created_at } = req.body.editPurchase;
 
         const [updated] = await Purchase.update({
             member_id,
             product_id,
+            created_at,
             processed
         }, {
             where: { purchase_id: purchase_id },
@@ -308,6 +312,24 @@ router.put('/purchases', async (req, res) => {
         });
 
         await Promise.all(updatePromises);
+
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.log('error: ', error);
+        res.status(500).json({ error: error.toString() });
+    }
+});
+
+// Delete purchase route
+router.delete('/purchases/:purchase_id', async (req, res) => {
+    try {
+        const { purchase_id } = req.params;
+
+        await Purchase.destroy({
+            where: {
+                purchase_id: purchase_id
+            }
+        });
 
         res.status(200).json({ success: true });
     } catch (error) {

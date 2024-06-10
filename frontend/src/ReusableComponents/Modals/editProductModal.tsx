@@ -25,6 +25,7 @@ const EditProductModal = ({ model }: any) => {
             open={model.showEditProductModal}
             closable={false}
             destroyOnClose={true}
+            style={{ zIndex: 999}}
             footer={[
                 <div key="buttons" className='checkout-buttons'>
                     <button className='stage-button cancel' key="back" onClick={() => model.setShowEditProductModal(false)}>
@@ -39,14 +40,14 @@ const EditProductModal = ({ model }: any) => {
                 </div>
             ]}
         >
-            <div className="modal-label">Product Name</div>
+            <div className="modal-label">Product Name <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="Product Name"
                 value={newProduct.name}
                 onChange={(e) => { setNewProduct({ ...newProduct, name: e.target.value }) }}
             />
-            <div className="modal-label">Price</div>
+            <div className="modal-label">Price <span style={{ color: 'red'}}>*</span></div>
             <InputNumber
                 size="large"
                 placeholder="Price"

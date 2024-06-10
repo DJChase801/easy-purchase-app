@@ -22,7 +22,6 @@ const ProductsPane = ({ model }: any) => {
       </div>
       <AddProductModal model={model} />
       <EditProductModal model={model} />
-      <ConfirmModal model={model} />
     </>
   );
 };

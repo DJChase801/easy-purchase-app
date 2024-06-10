@@ -33,7 +33,7 @@ const EditPurchaseModal = ({ model }: any) => {
             afterClose={() => setNewPurchase(Purchase.create({ member_id: '', product_id: '', purchase_date: '', processed: false }))}
             footer={[]}
         >
-            <div className="modal-label">Select Member</div>
+            <div className="modal-label">Select Member <span style={{ color: 'red'}}>*</span></div>
             <Select
                 id='member-input'
                 className='input'
@@ -50,7 +50,7 @@ const EditPurchaseModal = ({ model }: any) => {
                     .sort((a: any, b: any) => a.label.localeCompare(b.label))
                 }
             />
-            <div className="modal-label">Select Product</div>
+            <div className="modal-label">Select Product <span style={{ color: 'red'}}>*</span></div>
             <Select
                 id='product-input'
                 className='input'
@@ -67,7 +67,7 @@ const EditPurchaseModal = ({ model }: any) => {
                     .sort((a: any, b: any) => a.label.localeCompare(b.label))
                 }
             />
-            <div className="modal-label">Purchase Date</div>
+            <div className="modal-label">Purchase Date <span style={{ color: 'red'}}>*</span></div>
             <DatePicker
                 size="large"
                 className='input'
@@ -77,7 +77,7 @@ const EditPurchaseModal = ({ model }: any) => {
                     setNewPurchase({ ...newPurchase, purchase_date: dateString.toString() })
                 }}
             />
-            <div className="modal-label">Processed Already?</div>
+            <div className="modal-label">Processed Already? <span style={{ color: 'red'}}>*</span></div>
 
             <Checkbox
                 onChange={(e) => { setNewPurchase({ ...newPurchase, processed: e.target.checked }) }}
@@ -90,8 +90,11 @@ const EditPurchaseModal = ({ model }: any) => {
                 <button className='stage-button cancel' key="back" onClick={() => model.setShowEditPurchaseModal(false)}>
                     Cancel
                 </button>
+                <button className='stage-button cancel' key="delete" onClick={() => model.deletePurchase(newPurchase.purchase_id)}>
+                    Delete Purchase
+                </button>
                 <button className='stage-button' key="submit" onClick={() => model.editPurchaseRecord(newPurchase)}>
-                    Accept
+                    Save
                 </button>
             </div>
         </Modal>

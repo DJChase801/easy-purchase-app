@@ -8,8 +8,9 @@ const ConfirmModal = ({ model }: any) => {
         <Modal
             onCancel={() => model.setShowConfirmDeleteModal(false)}
             open={model.showConfirmDeleteModal}
+            destroyOnClose={true}
             closable={false}
-            style={{ top: '75%' }}
+            style={{ top: '30%', zIndex: 1000}}
             footer={[
                 <div key="buttons" className='checkout-buttons'>
                     <button className='stage-button cancel' key="back" onClick={() => model.setShowConfirmDeleteModal(false)}>

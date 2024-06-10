@@ -23,7 +23,7 @@ const AddPurchaseModal = ({ model }: any) => {
             footer={null}
             data-testid="add-purchase-modal"
         >
-            <div className="modal-label">Select Member</div>
+            <div className="modal-label">Select Member <span style={{ color: 'red'}}>*</span></div>
             <Select
                 id='member-input'
                 className='input'
@@ -40,7 +40,7 @@ const AddPurchaseModal = ({ model }: any) => {
                     .sort((a: any, b: any) => a.label.localeCompare(b.label))
                 }
             />
-            <div className="modal-label">Select Product</div>
+            <div className="modal-label">Select Product <span style={{ color: 'red'}}>*</span></div>
             <Select
                 id='product-input'
                 className='input'
@@ -57,7 +57,7 @@ const AddPurchaseModal = ({ model }: any) => {
                     .sort((a: any, b: any) => a.label.localeCompare(b.label))
                 }
             />
-            <div className="modal-label">Purchase Date</div>
+            <div className="modal-label">Purchase Date <span style={{ color: 'red'}}>*</span></div>
             <DatePicker
                 size="large"
                 className='input'
@@ -66,7 +66,7 @@ const AddPurchaseModal = ({ model }: any) => {
                     setNewPurchase({ ...newPurchase, purchase_date: dateString.toString() })
                 }}
             />
-            <div className="modal-label">Processed Already?</div>
+            <div className="modal-label">Processed Already? <span style={{ color: 'red'}}>*</span></div>
             <Checkbox
                 onChange={(e) => { setNewPurchase({ ...newPurchase, processed: e.target.checked }) }}
                 checked={newPurchase.processed}

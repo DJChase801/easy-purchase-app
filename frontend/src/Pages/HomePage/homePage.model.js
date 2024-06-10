@@ -113,9 +113,11 @@ const HomePageModel = model('HomePageModel', {
         const { data } = yield axios.post(`${API_URL}/program/${self.programId}/members?program_id=${self.programId}`, member);
         const newId = data.member_id;
         self.members.push(Member.create({ ...member, member_id: newId }));
+        self.memberSelect(newId);
         self.showAddMemberModal = false;
         message.success('Member added to the dropdown');
       } catch (e) {
+        console.log('e: ', e);
         message.error('Error adding member');
       }
     }),

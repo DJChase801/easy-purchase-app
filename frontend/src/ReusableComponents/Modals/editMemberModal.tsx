@@ -32,26 +32,26 @@ const EditMemberModal = ({ model }: any) => {
                         Delete Member
                     </button>
                     <button className='stage-button' key="submit" onClick={() => model.updateMember(existingMember)}>
-                        Accept
+                        Save
                     </button>
                 </div>
             ]}
         >
-            <div className="modal-label">First Name</div>
+            <div className="modal-label">First Name <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="First Name"
                 value={existingMember.first_name}
                 onChange={(e) => { setExistingMember({ ...existingMember, first_name: e.target.value }) }}
             />
-            <div className="modal-label">Last Name</div>
+            <div className="modal-label">Last Name <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="Last Name"
                 value={existingMember.last_name}
                 onChange={(e) => { setExistingMember({ ...existingMember, last_name: e.target.value }) }}
             />
-            <div className="modal-label">Email</div>
+            <div className="modal-label">Email <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="Email"

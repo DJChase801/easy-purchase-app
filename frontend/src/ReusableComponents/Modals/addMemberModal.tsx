@@ -20,21 +20,21 @@ const AddMemberModal = ({ model }: any) => {
             data-testid="add-member-modal"
             footer={[]}
         >
-            <div className="modal-label">First Name</div>
+            <div className="modal-label">First Name <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="First Name"
                 value={newMember.first_name}
                 onChange={(e) => { setNewMember({ ...newMember, first_name: e.target.value }) }}
             />
-            <div className="modal-label">Last Name</div>
+            <div className="modal-label">Last Name <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="Last Name"
                 value={newMember.last_name}
                 onChange={(e) => { setNewMember({ ...newMember, last_name: e.target.value }) }}
             />
-            <div className="modal-label">Email</div>
+            <div className="modal-label">Email <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="Email"

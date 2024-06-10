@@ -22,14 +22,14 @@ const AddProductModal = ({ model }: any) => {
             footer={null}
             data-testid="add-product-modal"
         >
-            <div className="modal-label">Product Name</div>
+            <div className="modal-label">Product Name <span style={{ color: 'red'}}>*</span></div>
             <Input
                 size="large"
                 placeholder="Product Name"
                 value={newProduct.name}
                 onChange={(e) => { setNewProduct({ ...newProduct, name: e.target.value }) }}
             />
-            <div className="modal-label">Price</div>
+            <div className="modal-label">Price <span style={{ color: 'red'}}>*</span></div>
             <InputNumber
                 size="large"
                 placeholder="Price"

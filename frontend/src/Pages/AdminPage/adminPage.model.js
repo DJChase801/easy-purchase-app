@@ -210,9 +210,15 @@ const AdminPageModel = model('AdminPageModel', {
         // products ************************
         setShowAddProductModal(value) {
             self.showAddProductModal = value;
+            if (!value) {
+                self.productToEdit = null;
+            }
         },
         setShowEditProductModal(value) {
             self.showEditProductModal = value;
+            if (!value) {
+                self.productToEdit = null;
+            }
         },
         editProduct(product) {
             self.productToEdit = product;
@@ -398,16 +404,31 @@ const AdminPageModel = model('AdminPageModel', {
                     member_id: purchase.member_id,
                     product_id: purchase.product_id,
                     created_at: new Date(purchase.purchase_date).toISOString().split('T')[0] + ' ' + new Date(purchase.purchase_date).toISOString().split('T')[1].substring(0, 8),
-                    processed: purchase.processed ? 1 : 0,
+                    processed: purchase.processed,
                 };
                 yield axios.put(`${API_URL}/program/${self.programId}/purchases/${purchase.purchase_id}?program_id=${self.programId}`, { editPurchase });
                 message.success('Edited Purchase');
-                self.setQueryStartDate('');
-                self.groupByMembers = false;
-                self.setQueryEndDate(''); // reset query results
+                self.getPurchases();
                 self.showEditPurchaseModal = false;
             } catch (e) {
                 message.error('Error processing purchase');
+            }
+        }),
+        deletePurchase(purchaseId) {
+            // confirm delete
+            self.deletingId = purchaseId;
+            self.deleteAction = 'purchase';
+            self.showConfirmDeleteModal = true;
+        },
+        confirmDeletePurchase: flow(function* confirmDeletePurchase(purchaseId) {
+            try {
+                yield axios.delete(`${API_URL}/program/${self.programId}/purchases/${purchaseId}?program_id=${self.programId}`);
+                self.getPurchases();
+                self.showConfirmDeleteModal = false;
+                self.showEditPurchaseModal = false;
+                message.success('Purchase deleted');
+            } catch (e) {
+                message.error('Error deleting purchase');
             }
         }),
         markProcessed: flow(function* markProcessed(ids, value) {

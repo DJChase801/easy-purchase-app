@@ -51,6 +51,7 @@ module.exports = (sequelize) => {
     }, {
         timestamps: false, // Disable Sequelize's default timestamps behavior
         tableName: 'Members', // Optional: Define the table name explicitly
+        paranoid: true, // Enable soft deletion
     });
 
     return Member;

@@ -60,7 +60,7 @@ export const HomePage = observer(({ model }: any) => {
                         btnText={'Remove'}
                     />
                     <div className='checkout'>
-                        <div style={{ padding: '10px 0'}}>total: ${model.cartTotal.toFixed(2) || '0.00'}</div>
+                        <div style={{ padding: '10px 0'}}>Total: ${model.cartTotal.toFixed(2) || '0.00'}</div>
                         <div className='checkout-buttons'>
                             <button onClick={model.cancelPurchase} className='stage-button cancel'>Cancel</button>
                             <button onClick={model.processPurchase} className='stage-button'>Accept</button>
