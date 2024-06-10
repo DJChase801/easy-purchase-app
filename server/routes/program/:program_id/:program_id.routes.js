@@ -307,7 +307,7 @@ router.put('/purchases', async (req, res) => {
             return await Purchase.update({
                 processed: value
             }, {
-                where: { purchase_id: purchaseId }
+                where: { purchase_id: purchaseId.trim() }
             });
         });
 
