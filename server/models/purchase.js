@@ -43,6 +43,7 @@ module.exports = (sequelize) => {
     }, {
         timestamps: false,
         tableName: 'Purchases',
+        paranoid: true,
     });
 
     Purchase.associate = function (models) {

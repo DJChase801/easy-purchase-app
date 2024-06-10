@@ -39,6 +39,7 @@ module.exports = (sequelize) => {
     }, {
         timestamps: false,
         tableName: 'Programs',
+        paranoid: true,
     });
 
     return Program;
