@@ -99,9 +99,12 @@ router.delete('/members/:member_id', async (req, res) => {
 // Route to get all products, including image URL
 router.get('/products', async (req, res) => {
     try {
+        const { program_id } = req.query;
         const products = await Product.findAll({
             attributes: ['product_id', 'name', 'price', 'image', 'image_type'],
-            // sort alphabetically by product name
+            where: {
+                program_id: program_id
+            },
             order: [['name', 'ASC']]
         });
 
