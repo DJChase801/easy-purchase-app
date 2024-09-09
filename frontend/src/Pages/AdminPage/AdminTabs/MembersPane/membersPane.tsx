@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Table, Space } from 'antd';
+import { Table, Space, Modal } from 'antd';
 import AddMemberModal from '../../../../ReusableComponents/Modals/addMemberModal';
 import EditMemberModal from '../../../../ReusableComponents/Modals/editMemberModal';
+import ImportMembersModal from '../../../../ReusableComponents/Modals/importMembersModal';
 
 
 const MembersPane = ({ model }: any) => {
@@ -59,12 +60,14 @@ const MembersPane = ({ model }: any) => {
       </div>
       <div className='right-pane'>
         <button onClick={() => model.setShowAddMemberModal(true)} className='action-button'>+ Add New Member</button>
-        {/* <button onClick={() => console.log('need to implement')} className='action-button'>Import Members</button> */}
+        <button onClick={() => model.setShowMemberImportModal(true)} className='action-button'>Import Members</button>
       </div>
       <AddMemberModal model={model} />
       <EditMemberModal model={model} />
+      <ImportMembersModal model={model} />
     </>
   );
 };
+
 
 export default observer(MembersPane);

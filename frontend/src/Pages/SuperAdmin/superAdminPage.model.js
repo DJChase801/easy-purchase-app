@@ -34,11 +34,9 @@ const SuperAdminPageModel = model('SuperAdminPageModel', {
         getPrograms: flow(function* getPrograms() {
             try {
                 const { data } = yield axios.get(`${API_URL}/login/super`);
-                console.log('data: ', data);
                 self.programs = data.programs;
 
             } catch (error) {
-                console.log('error: ', error);
                 message.error('Login failed');
             }
         }),
@@ -59,7 +57,6 @@ const SuperAdminPageModel = model('SuperAdminPageModel', {
                 self.newPassword = '';
 
             } catch (error) {
-                console.log('error: ', error);
                 message.error('Login failed');
             }
         }),

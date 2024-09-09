@@ -4,6 +4,9 @@ const router = express.Router();
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
 const { getPurchasesRecords } = require('../../../services/purchase.service');
+const fs = require('fs');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // ****************** MEMBERS ************************
 // get all members route
@@ -91,19 +94,32 @@ router.delete('/members/:member_id', async (req, res) => {
 });
 
 
-// ****************** PRODUCTS ************************
-// get all products route
+// ****************** PRODUCTS ************************ 
+
+// Route to get all products, including image URL
 router.get('/products', async (req, res) => {
     try {
-        const { program_id } = req.query;
         const products = await Product.findAll({
-            where: {
-                program_id: program_id
-            }
+            attributes: ['product_id', 'name', 'price', 'image', 'image_type'],
+            // sort alphabetically by product name
+            order: [['name', 'ASC']]
         });
-        res.status(200).json({ success: true, products: products });
+
+        // Format the products to include image as a base64 string
+        const formattedProducts = products.map(product => {
+            let base64Image = null;
+            if (product.image) {
+                // Convert binary image to base64
+                base64Image = `data:${product.image_type};base64,${product.image.toString('base64')}`;
+            }
+            return {
+                ...product.toJSON(),
+                image: base64Image,
+            };
+        });
+        res.status(200).json({ success: true, products: formattedProducts });
     } catch (error) {
-        console.log('error: ', error);
+        console.error('Error fetching products:', error);
         res.status(500).json({ error: error.toString() });
     }
 });
@@ -113,12 +129,11 @@ router.post('/products', async (req, res) => {
     try {
         const { program_id } = req.query;
         const product = req.body;
-
         const newProduct = await Product.create({
             program_id: program_id,
             name: product.name,
             price: product.price,
-            image: product.image
+            image_type: product.image_type,
         });
 
         res.status(200).json({ success: true, product_id: newProduct.product_id });
@@ -133,11 +148,10 @@ router.put('/products/:product_id', async (req, res) => {
     try {
         const { product_id } = req.params;
         const product = req.body;
-
         const updatedProduct = await Product.update({
             name: product.name,
             price: product.price,
-            image: product.image
+            image_type: product.image_type,
         }, {
             where: {
                 product_id: product_id
@@ -171,12 +185,34 @@ router.delete('/products/:product_id', async (req, res) => {
     }
 });
 
+// Update product image route
+router.put('/products/:product_id/image', upload.single('image'), async (req, res) => {
+    try {
+        const imageFilePath = req.file.path;
+        const { product_id } = req.params;
+        const imageBinary = fs.readFileSync(imageFilePath);
+        console.log('imageBinary: ', imageBinary);
+        await Product.update({
+            image: imageBinary
+        }, {
+            where: {
+                product_id: product_id
+            }
+        });
+
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.log('error: ', error);
+        res.status(500).json({ error: error.toString() });
+    }
+});
+
 // ****************** PURCHASES ************************
 // get all purchases route
 router.get('/purchases', async (req, res) => {
     try {
         const { program_id, start_date, end_date } = req.query;
-        
+
         const purchase = await Purchase.findAll({
             where: {
                 program_id: program_id,

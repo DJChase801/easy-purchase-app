@@ -117,7 +117,6 @@ const HomePageModel = model('HomePageModel', {
         self.showAddMemberModal = false;
         message.success('Member added to the dropdown');
       } catch (e) {
-        console.log('e: ', e);
         message.error('Error adding member');
       }
     }),
@@ -140,6 +139,7 @@ const HomePageModel = model('HomePageModel', {
         if (data.success) {
           message.success('Purchase processed, Thank you!');
           self.cartProducts = [];
+          self.selectedMemberId = null;
         } else {
           message.error('Error processing purchase');
         }

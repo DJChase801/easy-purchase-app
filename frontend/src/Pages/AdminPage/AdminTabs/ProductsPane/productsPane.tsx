@@ -3,6 +3,7 @@ import ProductWindow from '../../../../ReusableComponents/ProductWindow/productW
 import ConfirmModal from '../../../../ReusableComponents/Modals/confirmModal';
 import AddProductModal from '../../../../ReusableComponents/Modals/addProductModal';
 import EditProductModal from '../../../../ReusableComponents/Modals/editProductModal';
+import ImportProductsModal from '../../../../ReusableComponents/Modals/importProductsModal';
 import { observer } from 'mobx-react';
 
 const ProductsPane = ({ model }: any) => {
@@ -18,10 +19,11 @@ const ProductsPane = ({ model }: any) => {
       </div>
       <div className='right-pane products-pane'>
         <button onClick={() => model.setShowAddProductModal(true)} className='action-button'>+ Add New Product</button>
-        {/* <button onClick={() => console.log('need to implement')} className='action-button'>Import Products</button> */}
+        <button onClick={() => model.setShowImportProductsModal(true)} className='action-button'>Import Products</button>
       </div>
       <AddProductModal model={model} />
       <EditProductModal model={model} />
+      <ImportProductsModal model={model} />
     </>
   );
 };

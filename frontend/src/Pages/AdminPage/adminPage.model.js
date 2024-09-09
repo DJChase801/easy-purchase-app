@@ -7,6 +7,7 @@ import Purchases from '../../Classes/Purchases';
 import axios from 'axios';
 import { message, } from 'antd';
 import _cloneDeep from 'lodash/cloneDeep';
+import * as XLSX from 'xlsx';
 
 const API_URL = 'https://easy-purchase-app-3cc626bc131a.herokuapp.com/api';
 // const API_URL = 'http://localhost:5000/api';
@@ -35,6 +36,10 @@ const AdminPageModel = model('AdminPageModel', {
         productToEdit: null,
         purchaseToEdit: null,
         deleteAction: '',
+        imgPreview: null,
+        showMemberImportModal: false,
+        showImportProductsModal: false,
+        selectedFile: null,
     }))
     .views((self) => ({
         get appStore() {
@@ -77,7 +82,7 @@ const AdminPageModel = model('AdminPageModel', {
                 first_name: first_name,
                 last_name: last_name,
                 email: member.email.trim(),
-                phone: member.phone.trim(),
+                phone: member.phone.toString().trim(),
             }
         },
         normalizeProduct(product) {
@@ -85,7 +90,7 @@ const AdminPageModel = model('AdminPageModel', {
                 product_id: product.product_id,
                 name: self.capAndTrim(product.name),
                 price: product.price,
-                image: product.image.trim(),
+                image_type: self.selectedFile ? self.selectedFile.type : '',
             }
         }
     }))
@@ -250,8 +255,18 @@ const AdminPageModel = model('AdminPageModel', {
                 }
                 const { data } = yield axios.post(`${API_URL}/program/${self.programId}/products?program_id=${self.programId}`, product);
                 const newId = data.product_id;
-                self.products.push(Product.create({ ...product, product_id: newId }));
+                if (self.selectedFile) {
+                    const formData = new FormData();
+                    formData.append('image', self.selectedFile);
+                    yield axios.put(`${API_URL}/program/${self.programId}/products/${newId}/image?program_id=${self.programId}`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                }
+                self.products.push(Product.create({ ...product, product_id: newId, image: self.imgPreview || '' }));
                 self.showAddProductModal = false;
+                self.selectedFile = null;
             } catch (e) {
                 message.error('Error adding product');
             }
@@ -259,7 +274,7 @@ const AdminPageModel = model('AdminPageModel', {
         updateProduct: flow(function* updateProduct(productNotNormalized) {
             const product = self.normalizeProduct(productNotNormalized);
             try {
-                if (product !== self.productToEdit) {
+                if ((product !== self.productToEdit) || self.selectedFile) {
                     if (!product?.name || product?.price === null) {
                         message.error('Please fill out all required fields');
                         return;
@@ -272,9 +287,24 @@ const AdminPageModel = model('AdminPageModel', {
                     // update product
                     const { data } = yield axios.put(`${API_URL}/program/${self.programId}/products/${self.productToEdit.product_id}?program_id=${self.programId}`, product);
                     const savedProduct = data.product;
+                    if (self.selectedFile) {
+                        const formData = new FormData();
+                        formData.append('image', self.selectedFile);
+                        yield axios.put(`${API_URL}/program/${self.programId}/products/${savedProduct.product_id}/image?program_id=${self.programId}`, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+                    }
                     // replace product in products array with updated product
                     const index = self.products.findIndex(p => p.product_id === savedProduct.product_id);
-                    self.products[index] = savedProduct;
+                    self.products[index] = {
+                        name: savedProduct.name,
+                        price: savedProduct.price,
+                        product_id: savedProduct.product_id,
+                        image: self.imgPreview || '',
+                    };
+                    self.selectedFile = null;
                 }
                 self.showEditProductModal = false;
             } catch (e) {
@@ -297,7 +327,6 @@ const AdminPageModel = model('AdminPageModel', {
                 self.products = self.products.filter(product => product.product_id !== id);
                 message.success('Product deleted');
             } catch (e) {
-                console.log('e: ', e);
                 message.error('Error deleting product');
             }
         }),
@@ -315,6 +344,69 @@ const AdminPageModel = model('AdminPageModel', {
         editPurchase(purchase) {
             self.purchaseToEdit = purchase;
             self.showEditPurchaseModal = true;
+        },
+        importMembers(files) {
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const binaryStr = e.target.result;
+                const workbook = XLSX.read(binaryStr, { type: 'binary' });
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                const parsedData = XLSX.utils.sheet_to_json(sheet);
+                // create a member for each row
+                const members = parsedData.map(row => {
+                    return {
+                        first_name: row['First Name'],
+                        last_name: row['Last Name'],
+                        email: row['Email'],
+                        phone: row['Phone'],
+                    }
+                });
+
+                members.forEach(member => {
+                    self.addMember(member);
+                });
+                self.setShowMemberImportModal(false);
+            };
+
+            reader.readAsArrayBuffer(file);
+        },
+        importProducts(files) {
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const binaryStr = e.target.result;
+                const workbook = XLSX.read(binaryStr, { type: 'binary' });
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                const parsedData = XLSX.utils.sheet_to_json(sheet);
+                // create a product for each row
+                const products = parsedData.map(row => {
+                    return {
+                        name: row['Name'],
+                        price: row['Price'],
+                    }
+                });
+
+                products.forEach(product => {
+                    self.addProduct(product);
+                });
+                self.setShowImportProductsModal(false);
+            };
+
+            reader.readAsArrayBuffer(file);
+        },
+        handleImgSelect(e) {
+            const file = e.target.files[0];
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (validImageTypes.includes(file.type)) {
+                self.selectedFile = file;
+                const previewUrl = URL.createObjectURL(file);
+                self.imgPreview = previewUrl;
+            } else {
+                alert('Please upload a valid image file.');
+            }
         },
         setQueryStartDate(value) {
             if (!value) {
@@ -343,12 +435,10 @@ const AdminPageModel = model('AdminPageModel', {
                 self.purchases = [];
                 self.purchase = [];
                 const { data } = yield axios
-                .get(`${API_URL}/program/${self.programId}/purchases?program_id=${self.programId}&start_date=${self.queryStartDate}&end_date=${self.queryEndDate}&group_by_members=${self.groupByMembers}`);
-                console.log('data: ', data);
+                    .get(`${API_URL}/program/${self.programId}/purchases?program_id=${self.programId}&start_date=${self.queryStartDate}&end_date=${self.queryEndDate}&group_by_members=${self.groupByMembers}`);
                 if (!data.purchases) {
                     message.warning('No purchases found');
                 } else {
-                    console.log('data.purchases: ', data.purchases);
                     self.purchases = data.purchases.map(purchase => Purchases.create({
                         purchase_ids: purchase.purchase_ids,
                         member: purchase.member,
@@ -368,7 +458,6 @@ const AdminPageModel = model('AdminPageModel', {
                     }));
                 }
             } catch (e) {
-                console.log('e: ', e);
                 message.error('Error fetching purchases');
             }
         }),
@@ -445,10 +534,15 @@ const AdminPageModel = model('AdminPageModel', {
             try {
                 yield axios.put(`${API_URL}/program/${self.programId}/purchases?program_id=${self.programId}`, { purchaseIds, value });
             } catch (e) {
-                console.log('e: ', e);
                 message.error('Error processing purchase');
             }
         }),
+        setShowMemberImportModal(value) {
+            self.showMemberImportModal = value;
+        },
+        setShowImportProductsModal(value) {
+            self.showImportProductsModal = value;
+        },
         processPurchases(value) {
             const ids = self.purchase.map(purchase => purchase.purchase_id);
             self.markProcessed(ids, value);

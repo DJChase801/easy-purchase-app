@@ -6,8 +6,8 @@ import EditPurchaseModal from '../../../../ReusableComponents/Modals/editPurchas
 import { keys } from 'mobx';
 const { RangePicker } = DatePicker;
 
-const PurchasesPane = ({ model }: any) => {
-  const onChange = (dates: any, dateStrings: [string, string]) => {
+const PurchasesPane = ({ model }) => {
+  const onChange = (dates, dateStrings) => {
     model.setQueryStartDate(dateStrings[0]);
     model.setQueryEndDate(dateStrings[1]);
   }
@@ -25,13 +25,16 @@ const PurchasesPane = ({ model }: any) => {
         dataIndex: 'productsNice',
         key: 'products',
         width: 120,
+        render: (products) => (
+          <PurchasedPile products={products.split(',')}/>
+        ),
       },
       {
         title: 'Amount',
         dataIndex: 'amount',
         key: 'amount',
         width: 70,
-        render: (amount: number) => (
+        render: (amount) => (
           <>{`$${amount.toFixed(2)}`}</>
         ),
       },
@@ -40,7 +43,7 @@ const PurchasesPane = ({ model }: any) => {
         dataIndex: 'processed',
         key: 'processed',
         width: 70,
-        render: (processed: boolean) => (
+        render: (processed) => (
           <>
             {processed
               ? <Tag color='green'>Done</Tag>
@@ -53,7 +56,7 @@ const PurchasesPane = ({ model }: any) => {
         title: 'Action',
         key: 'action',
         width: 100,
-        render: (_: any, record: any) => (
+        render: (_, record) => (
           <Space>
             <div className="link" onClick={() => {
               model.markProcessed(record.purchase_ids.split(','), !record.processed)
@@ -90,7 +93,7 @@ const PurchasesPane = ({ model }: any) => {
         dataIndex: 'amount',
         key: 'amount2',
         width: 70,
-        render: (amount: number) => (
+        render: (amount) => (
           <>{`$${amount.toFixed(2)}`}</>
         ),
       },
@@ -99,7 +102,7 @@ const PurchasesPane = ({ model }: any) => {
         dataIndex: 'processed',
         key: 'processed2',
         width: 70,
-        render: (processed: boolean) => (
+        render: (processed) => (
           <>
             {processed
               ? <Tag color='green'>Done</Tag>
@@ -112,7 +115,7 @@ const PurchasesPane = ({ model }: any) => {
         title: 'Action',
         key: 'action',
         width: 100,
-        render: (_: any, record: any) => (
+        render: (_, record) => (
           <Space>
             <div className="link" onClick={() => model.editPurchase(record)}>Edit</div>
             <div className="link" onClick={() => {
@@ -172,6 +175,34 @@ const PurchasesPane = ({ model }: any) => {
       <AddPurchaseModal model={model} />
       <EditPurchaseModal model={model} />
     </>
+  );
+};
+
+const PurchasedPile = ({ products }) => {
+  // Handle the case where there's only one product
+  if (products.length < 2) {
+    return <>{products[0]} x 1</>;
+  }
+
+  // Create a map of products and their quantities
+  const productMap = products.reduce((acc, prod) => {
+    const product = prod.trim();
+    if (!acc[product]) {
+      acc[product] = 1;
+    } else {
+      acc[product] += 1;
+    }
+    return acc;
+  }, {});
+
+  return (
+    <div>
+      {Object.keys(productMap).map((product, index) => (
+        <div key={index}>
+          [ {productMap[product]} ] ... {product}
+        </div>
+      ))}
+    </div>
   );
 };
 

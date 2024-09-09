@@ -38,16 +38,22 @@ const AddProductModal = ({ model }: any) => {
                 value={newProduct.price}
                 onChange={changePrice}
             />
-            <div className="modal-label">Img URL</div>
+            {/* <div className="modal-label">Img URL</div>
             <Input
                 size="large"
                 style={{ marginBottom: '40px' }}
                 placeholder="Image Url..."
                 value={newProduct.image}
                 onChange={(e) => { setNewProduct({ ...newProduct, image: e.target.value }) }}
-            />
+            /> */}
+            <br />
+            <br />
+            <br />
+            <input type="file" accept="image/*" onChange={(e) => { model.handleImgSelect(e) }} />
+            <br />
+            <br />
             <div style={{ width: '100px', height: '100px' }} >
-                <img src={newProduct.image || 'https://static-00.iconduck.com/assets.00/no-image-icon-2048x2048-2t5cx953.png'} alt="Product" style={{ height: '100px' }} />
+                <img src={model.imgPreview || newProduct.image || 'https://static-00.iconduck.com/assets.00/no-image-icon-2048x2048-2t5cx953.png'} alt="Product" style={{ height: '100px' }} />
             </div>
             <br />
             <div><span style={{ color: 'red'}}>*</span> Indicates Required Fields</div>
