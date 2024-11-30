@@ -43,6 +43,11 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
         },
+        sku: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: true, // if SKUs are unique
+          },          
     }, {
         timestamps: false,
         tableName: 'Products',

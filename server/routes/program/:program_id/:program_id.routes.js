@@ -101,7 +101,7 @@ router.get('/products', async (req, res) => {
     try {
         const { program_id } = req.query;
         const products = await Product.findAll({
-            attributes: ['product_id', 'name', 'price', 'image', 'image_type'],
+            attributes: ['product_id', 'name', 'price', 'image', 'image_type', 'sku'],
             where: {
                 program_id: program_id
             },
@@ -137,6 +137,7 @@ router.post('/products', async (req, res) => {
             name: product.name,
             price: product.price,
             image_type: product.image_type,
+            sku: product.sku,
         });
 
         res.status(200).json({ success: true, product_id: newProduct.product_id });
@@ -151,21 +152,42 @@ router.put('/products/:product_id', async (req, res) => {
     try {
         const { product_id } = req.params;
         const product = req.body;
-        const updatedProduct = await Product.update({
-            name: product.name,
-            price: product.price,
-            image_type: product.image_type,
-        }, {
-            where: {
-                product_id: product_id
+
+        // Perform the update
+        const [affectedRows] = await Product.update(
+            {
+                name: product.name,
+                price: product.price,
+                image_type: product.image_type,
+                sku: product.sku,
             },
-            returning: true,
-            plain: true
+            {
+                where: {
+                    product_id: product_id,
+                },
+            }
+        );
+
+        if (affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Product not found or no changes made' });
+        }
+
+        // Fetch the updated product
+        const updatedProduct = await Product.findOne({
+            attributes: ['product_id', 'name', 'price', 'sku'],
+            where: { product_id },
         });
 
-        res.status(200).json({ success: true, product: updatedProduct[1] });
+        if (!updatedProduct) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        res.status(200).json({
+            success: true,
+            product: updatedProduct.toJSON(),
+        });
     } catch (error) {
-        console.log('error: ', error);
+        console.error('Error updating product:', error);
         res.status(500).json({ error: error.toString() });
     }
 });
@@ -194,7 +216,6 @@ router.put('/products/:product_id/image', upload.single('image'), async (req, re
         const imageFilePath = req.file.path;
         const { product_id } = req.params;
         const imageBinary = fs.readFileSync(imageFilePath);
-        console.log('imageBinary: ', imageBinary);
         await Product.update({
             image: imageBinary
         }, {

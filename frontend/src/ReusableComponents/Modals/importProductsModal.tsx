@@ -16,7 +16,7 @@ const ImportProductsModal = ({ model }: any) => {
         footer={[]}
       >
         <div className="modal-label">Upload CSV File</div>
-        <div>Columns must be | Name | Price |</div>
+        <div>Columns must be | Name | Price | Sku |</div>
         <div>Note: price input will only be a decimal number, NOT a value with '$' in it.</div>
         <br />
         <input

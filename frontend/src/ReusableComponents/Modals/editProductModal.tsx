@@ -8,7 +8,7 @@ const EditProductModal = ({ model }: any) => {
     const [newProduct, setNewProduct] = useState(Product.create({ name: '', price: 0 }));
     useEffect(() => {
         if (model.productToEdit) {
-            setNewProduct({ name: model.productToEdit.name, price: model.productToEdit.price, image: model.productToEdit.image, product_id: model.productToEdit.product_id, img_type: '' });
+            setNewProduct({ name: model.productToEdit.name, price: model.productToEdit.price, image: model.productToEdit.image, product_id: model.productToEdit.product_id, img_type: '', sku: model.productToEdit.sku });
         }
     }, [model.productToEdit]);
     const changePrice: InputNumberProps['onChange'] = (value) => {
@@ -56,14 +56,13 @@ const EditProductModal = ({ model }: any) => {
                 value={newProduct.price}
                 onChange={changePrice}
             />
-            {/* <div className="modal-label">Img URL</div>
+            <div className="modal-label">Product Sku</div>
             <Input
                 size="large"
-                style={{ marginBottom: '40px' }}
-                placeholder="Image URL..."
-                value={newProduct.image}
-                onChange={(e) => { setNewProduct({ ...newProduct, image: e.target.value }) }}
-            /> */}
+                placeholder="Product Sku"
+                value={newProduct.sku || ''}
+                onChange={(e) => { setNewProduct({ ...newProduct, sku: e.target.value }) }}
+            />
             <br />
             <br />
             <br />

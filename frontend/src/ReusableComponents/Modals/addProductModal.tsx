@@ -4,7 +4,7 @@ import { Modal, Input, InputNumber, InputNumberProps } from "antd";
 import Product from "../../Classes/Product";
 
 const AddProductModal = ({ model }: any) => {
-    const [newProduct, setNewProduct] = useState(Product.create({ name: '', price: 0 }));
+    const [newProduct, setNewProduct] = useState(Product.create({ name: '', price: 0, sku: '' }));
     const changePrice: InputNumberProps['onChange'] = (value) => {
         setNewProduct({ ...newProduct, price: value as number });
     }
@@ -18,7 +18,7 @@ const AddProductModal = ({ model }: any) => {
             onCancel={() => model.setShowAddProductModal(false)}
             open={model.showAddProductModal}
             closable={false}
-            afterClose={() => setNewProduct(Product.create({ name: '', price: 0 }))}
+            afterClose={() => setNewProduct(Product.create({ name: '', price: 0, sku: '' }))}
             footer={null}
             data-testid="add-product-modal"
         >
@@ -38,14 +38,13 @@ const AddProductModal = ({ model }: any) => {
                 value={newProduct.price}
                 onChange={changePrice}
             />
-            {/* <div className="modal-label">Img URL</div>
+            <div className="modal-label">Product Sku</div>
             <Input
                 size="large"
-                style={{ marginBottom: '40px' }}
-                placeholder="Image Url..."
-                value={newProduct.image}
-                onChange={(e) => { setNewProduct({ ...newProduct, image: e.target.value }) }}
-            /> */}
+                placeholder="Product Sku"
+                value={newProduct.sku || ''}
+                onChange={(e) => { setNewProduct({ ...newProduct, sku: e.target.value }) }}
+            />
             <br />
             <br />
             <br />

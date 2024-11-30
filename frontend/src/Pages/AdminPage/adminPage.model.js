@@ -91,6 +91,7 @@ const AdminPageModel = model('AdminPageModel', {
                 name: self.capAndTrim(product.name),
                 price: product.price,
                 image_type: self.selectedFile ? self.selectedFile.type : '',
+                sku: product.sku,
             }
         }
     }))
@@ -235,7 +236,7 @@ const AdminPageModel = model('AdminPageModel', {
                 if (!data.products) {
                     message.error('Error fetching products');
                 } else {
-                    self.products = data.products.map(product => Product.create({ name: product.name, price: product.price, product_id: product.product_id, image: product.image || '' }));
+                    self.products = data.products.map(product => Product.create({ name: product.name, price: product.price, product_id: product.product_id, image: product.image || '', sku: product.sku || '' }));
                 }
             } catch (e) {
                 message.error('Error fetching products');
@@ -248,9 +249,9 @@ const AdminPageModel = model('AdminPageModel', {
                     message.error('Please fill out all required fields');
                     return;
                 }
-                const existingProduct = self.products.find(p => p.name === product.name);
+                const existingProduct = self.products.find(p => p.name === product.name || (p.sku === product.sku && product.sku));
                 if (existingProduct) {
-                    message.error('Product already exists with that name');
+                    message.error('Product already exists with that name or sku');
                     return;
                 }
                 const { data } = yield axios.post(`${API_URL}/program/${self.programId}/products?program_id=${self.programId}`, product);
@@ -264,7 +265,12 @@ const AdminPageModel = model('AdminPageModel', {
                         }
                     });
                 }
-                self.products.push(Product.create({ ...product, product_id: newId, image: self.imgPreview || '' }));
+                self.products.push(Product.create({ 
+                    ...product, 
+                    product_id: newId, 
+                    image: self.imgPreview || productNotNormalized.image || '', 
+                }));
+                self.imgPreview = null;
                 self.showAddProductModal = false;
                 self.selectedFile = null;
             } catch (e) {
@@ -302,10 +308,12 @@ const AdminPageModel = model('AdminPageModel', {
                         name: savedProduct.name,
                         price: savedProduct.price,
                         product_id: savedProduct.product_id,
-                        image: self.imgPreview || '',
+                        image: self.imgPreview || productNotNormalized.image || '',
+                        sku: savedProduct.sku || '',
                     };
                     self.selectedFile = null;
                 }
+                self.imgPreview = null;
                 self.showEditProductModal = false;
             } catch (e) {
                 message.error('Error updating product');
@@ -386,6 +394,7 @@ const AdminPageModel = model('AdminPageModel', {
                     return {
                         name: row['Name'],
                         price: row['Price'],
+                        sku: row['Sku'],
                     }
                 });
 

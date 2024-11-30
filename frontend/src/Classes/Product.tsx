@@ -8,6 +8,7 @@ const ProductModel = model('ProductModel', {
     price: number,
 	image: optional(string, ''),
 	img_type: optional(string, ''),
+	sku: optional(string, ''),
 })
 	.views((self) => ({
 	}))
